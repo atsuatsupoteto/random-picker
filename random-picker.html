@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>支払い担当ランダム決定</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    #names { margin-top: 10px; }
+    .name { margin: 2px 0; }
+    button { margin: 5px; }
+    #result { margin-top: 20px; font-weight: bold; font-size: 1.2em; }
+  </style>
+</head>
+<body>
+  <h1>支払い担当ランダム決定アプリ</h1>
+  
+  <input type="text" id="nameInput" placeholder="名前を入力">
+  <button onclick="addName()">追加</button>
+  
+  <div id="names"></div>
+  
+  <button onclick="pickRandom()">ランダムで選ぶ</button>
+  
+  <div id="result"></div>
+  
+  <script>
+    const names = [];
+
+    function addName() {
+      const input = document.getElementById("nameInput");
+      const name = input.value.trim();
+      if (name) {
+        names.push(name);
+        updateNames();
+        input.value = "";
+      }
+    }
+
+    function updateNames() {
+      const listDiv = document.getElementById("names");
+      listDiv.innerHTML = "";
+      names.forEach(n => {
+        const div = document.createElement("div");
+        div.className = "name";
+        div.textContent = n;
+        listDiv.appendChild(div);
+      });
+    }
+
+    function pickRandom() {
+      if (names.length === 0) {
+        document.getElementById("result").textContent = "名前がありません！";
+        return;
+      }
+      const randomName = names[Math.floor(Math.random() * names.length)];
+      document.getElementById("result").textContent = `選ばれたのは: ${randomName}`;
+    }
+  </script>
+</body>
+</html>
