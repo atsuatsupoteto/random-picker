@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>支払い担当ランダム決定</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    #names { margin-top: 10px; }
+    .name { margin: 2px 0; }
+    button { margin: 5px; }
+    #result { margin-top: 20px; font-weight: bold; font-size: 1.2em; }
+  </style>
+</head>
+<body>
+  <h1>支払い担当ランダム決定アプリ</h1>
+
+  <input type="text" id="nameInput" placeholder="名前を入力">
+  <button onclick="addName()">追加</button>
+
+  <div id="names"></div>
+
+  <button onclick="pickRandom()">ランダムで選ぶ</button>
+
+  <div id="result"></div>
+
+  <script>
+    const names = [];
+
+    // 「樋口 / ひぐち / ヒグチ」を含むかどうか判定（全角/半角のゆれ対策でNFKC）
+    function isHiguchi(s) {
+      const n = s.normalize('NFKC'); // ﾋ → ヒ など
+      return /(樋口|ひぐち|ヒグチ)/.test(n);
+    }
+
+    function addName() {
+      const input = document.getElementById("nameInput");
+      const name = input.value.trim();
+      if (name) {
+        names.push(name);
+        updateNames();
+        input.value = "";
+        input.focus();
+      }
+    }
+
+    function updateNames() {
+      const listDiv = document.getElementById("names");
+      listDiv.innerHTML = "";
+      names.forEach(n => {
+        const div = document.createElement("div");
+        div.className = "name";
+        div.textContent = n;
+        listDiv.appendChild(div);
+      });
+    }
+
+    function pickRandom() {
+      const resultEl = document.getElementById("result");
+      if (names.length === 0) {
+        resultEl.textContent = "名前がありません！";
+        return;
+      }
+
+      // ★ ここが“仕込み”ポイント
+      const riggedCandidates = names.filter(isHiguchi);
+      const pool = riggedCandidates.length > 0 ? riggedCandidates : names;
+
+      const picked = pool[Math.floor(Math.random() * pool.length)];
+      resultEl.textContent = `選ばれたのは: ${picked}`;
+    }
+  </script>
+</body>
+</html>
