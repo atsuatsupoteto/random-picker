@@ -8,7 +8,7 @@
 </head>
 <body>
   <div class="container">
-    <h1>🎲 支払い担当ランダム決定アプリ 🎲</h1>
+    <h1 id="title">🎲 支払い担当ランダム決定アプリ 🎲</h1>
 
     <input type="text" id="nameInput" placeholder="名前を入力">
     <button onclick="addName()">➕ 追加</button>
@@ -22,6 +22,17 @@
 
   <script>
     const names = [];
+    let clickCount = 0;
+    let clickTimer = null;
+
+    document.getElementById('title').addEventListener('click', function() {
+      clickCount++;
+      if (clickCount === 3) {
+        window.location.href = 'index.html';
+      }
+      clearTimeout(clickTimer);
+      clickTimer = setTimeout(() => { clickCount = 0; }, 800);
+    });
 
     // 「樋口 / ひぐち / ヒグチ」を含むかどうか判定（全角/半角のゆれ対策でNFKC）
     function isHiguchi(s) {

@@ -28,6 +28,8 @@ h1 {
   font-weight: 700;
   letter-spacing: -0.5px;
   word-break: keep-all;
+  cursor: pointer;
+  user-select: none;
 }
 input {
   width: 100%;
