@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>支払い担当ランダム決定</title>
   <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
 <body>
   <div class="container">
@@ -19,63 +20,5 @@
 
     <div id="result"></div>
   </div>
-
-  <script>
-    const names = [];
-    let clickCount = 0;
-    let clickTimer = null;
-
-    document.getElementById('title').addEventListener('click', function() {
-      clickCount++;
-      if (clickCount === 3) {
-        window.location.href = 'index.html';
-      }
-      clearTimeout(clickTimer);
-      clickTimer = setTimeout(() => { clickCount = 0; }, 800);
-    });
-
-    // 「樋口 / ひぐち / ヒグチ」を含むかどうか判定（全角/半角のゆれ対策でNFKC）
-    function isHiguchi(s) {
-      const n = s.normalize('NFKC'); // ﾋ → ヒ など
-      return /(樋口|ひぐち|ヒグチ)/.test(n);
-    }
-
-    function addName() {
-      const input = document.getElementById("nameInput");
-      const name = input.value.trim();
-      if (name) {
-        names.push(name);
-        updateNames();
-        input.value = "";
-        input.focus();
-      }
-    }
-
-    function updateNames() {
-      const listDiv = document.getElementById("names");
-      listDiv.innerHTML = "";
-      names.forEach(n => {
-        const div = document.createElement("div");
-        div.className = "name";
-        div.textContent = n;
-        listDiv.appendChild(div);
-      });
-    }
-
-    function pickRandom() {
-      const resultEl = document.getElementById("result");
-      if (names.length === 0) {
-        resultEl.textContent = "名前がありません！";
-        return;
-      }
-
-      // ★ ここが“仕込み”ポイント
-      const riggedCandidates = names.filter(isHiguchi);
-      const pool = riggedCandidates.length > 0 ? riggedCandidates : names;
-
-      const picked = pool[Math.floor(Math.random() * pool.length)];
-      resultEl.textContent = `選ばれたのは: ${picked}`;
-    }
-  </script>
 </body>
 </html>

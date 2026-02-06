@@ -112,7 +112,20 @@ button:active {
   align-items: center;
   justify-content: center;
   word-break: break-word;
+  transition: all 0.2s;
 }
 #result:empty {
   display: none;
+}
+#result.spinning {
+  background: #fafafa;
+  border-color: #0095f6;
+  color: #8e8e8e;
+  font-size: 16px;
+}
+#result.selected {
+  background: #e7f3ff;
+  border-color: #0095f6;
+  color: #0095f6;
+  transform: scale(1.05);
 }
