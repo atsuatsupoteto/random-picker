@@ -66,10 +66,15 @@ function pickRandom() {
     count++;
     
     if (count >= maxCount) {
-      resultEl.textContent = `選ばれたのは: ${picked}`;
+      resultEl.textContent = names[index % names.length];
       resultEl.classList.remove('spinning');
-      resultEl.classList.add('selected');
-      setTimeout(() => resultEl.classList.remove('selected'), 500);
+      setTimeout(() => {
+        resultEl.textContent = `漢気を見せるのは: ${picked}`;
+        setTimeout(() => {
+          resultEl.classList.add('selected');
+          setTimeout(() => resultEl.classList.remove('selected'), 300);
+        }, 200);
+      }, 50);
       return;
     }
     
