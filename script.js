@@ -56,7 +56,7 @@ function pickRandom() {
   const picked = pool[Math.floor(Math.random() * pool.length)];
   let index = 0;
   let count = 0;
-  const maxCount = 65;
+  const maxCount = 55;
   
   resultEl.classList.add('spinning');
   
@@ -66,7 +66,6 @@ function pickRandom() {
     count++;
     
     if (count >= maxCount) {
-      resultEl.textContent = names[index % names.length];
       resultEl.classList.remove('spinning');
       setTimeout(() => {
         resultEl.textContent = `漢気を見せるのは: ${picked}`;
